@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<productos>
+  <producto>
+    <codigo>COD001</codigo>
+    <descripcion>Zapatillas de running</descripcion>
+    <importe>59.99</importe>
+    <stock>20</stock>
+  </producto>
+  <producto>
+    <codigo>COD002</codigo>
+    <descripcion>Camiseta de fútbol</descripcion>
+    <importe>24.99</importe>
+    <stock>50</stock>
+  </producto>
+  <producto>
+    <codigo>COD003</codigo>
+    <descripcion>Pantalón de yoga</descripcion>
+    <importe>34.99</importe>
+    <stock>10</stock>
+  </producto>
+  <producto>
+    <codigo>COD004</codigo>
+    <descripcion>Guantes de boxeo</descripcion>
+    <importe>49.99</importe>
+    <stock>5</stock>
+  </producto>
+</productos>
