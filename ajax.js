@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 
     $('#boton2').click(function () {
-        alert("segundo btn")
+        alert("segundo btn.")
         // Obtener cadena JSON del almacenamiento local
         const productoJSON = localStorage.getItem('producto');
     
