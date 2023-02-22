@@ -4,20 +4,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="ajax.js"></script>
     <title>Document</title>
 </head>
 <body>
     <h1>Pantalla A</h1>
-
+    <h2>Alta de Producto</h2>
     <form action="">
-        <label for="">Código Producto</label>
-        <input type="text" name="" id="">
-        <label for="">Descripción</label>
-        <input type="text" name="" id="">
-        <label for="">Importe</label>
-        <input type="text" name="" id="">
-        <label for="">Stock</label>
-        <input type="text" name="" id="">
-    </form>
+        <div class="form-group">
+        
+          <input type="text" class="form-control" id="cod_producto" placeholder="código de producto">
+        </div>
+        <div class="form-group">
+        
+          <input type="text" class="form-control" id="descrip" placeholder="descripción del producto">
+        </div>
+        <div class="form-group">
+        
+          <input type="text" class="form-control" id="importe" placeholder="Ingrese importe del producto">
+        </div>
+        <div class="form-group">
+         
+          <input type="text" class="form-control" id="stock" placeholder="Stock del producto">
+        </div>
+        <button type="button" class="btn btn-primary" id="boton1">Alta producto</button>
+        <button type="button" class="btn btn-primary" id="boton2">Ver datos</button>
+      </form>
+      
 </body>
+
 </html>
