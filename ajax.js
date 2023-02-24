@@ -19,7 +19,7 @@ $(document).ready(function () {
 
         // Guardar cadena JSON en localStorage
         localStorage.setItem('producto', productoJSON);
-        alert($('input:text[id=cod_producto]').val())
+        
         alert($('input:text[id=descrip]').val())
         alert($('input:text[id=importe]').val())
         alert($('input:text[id=stock]').val())
@@ -31,7 +31,22 @@ $(document).ready(function () {
         alert("segundo btn.")
         // Obtener cadena JSON del almacenamiento local
         const productoJSON = localStorage.getItem('producto');
-    
+
+        //obtener datos del porducto para pasarlo al xml
+        // let data = localStorage.getItem('producto')
+        // let xhr = new XMLHttpRequest()
+        // let url = 'productos.xml'
+        // xhr.open('POST', url, true);
+        // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        // let params = 'producto='+encodeURIComponent(data);
+        // xhr.send(params);
+
+        // xhr.onreadystatechange = function(){
+        //     if(xhr.readyState ===4 && xhr.status ===200){
+        //         console.log(xhr.responseText)
+        //     }
+        // }
+
         // Convertir cadena JSON a objeto
         const producto = JSON.parse(productoJSON);
     
@@ -39,7 +54,9 @@ $(document).ready(function () {
         console.log(producto.codigo);        
         console.log(producto.descripcion);  
         console.log(producto.importe);      
-        console.log(producto.stock);        
+        console.log(producto.stock);   
+        
+
     
     });
     
