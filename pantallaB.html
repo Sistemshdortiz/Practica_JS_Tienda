@@ -18,7 +18,8 @@
     <button type="button" id="botonBusqueda">Buscar</button>
 
     <ul id="sugerencia"></ul>
-    <script>const buscarInput = document.querySelector('#busqueda');
+    <script>
+    const buscarInput = document.querySelector('#busqueda');
         const listaSugerencias = document.querySelector('#sugerencia');
 
         buscarInput.addEventListener('input', busqueda);
@@ -36,29 +37,21 @@
 
         function getSugerencias(textoBuscado) {
             return new Promise((resolve, reject) => {
-                $.ajax({
-                    url: 'productos.xml',
-                    dataType: 'xml',
-                    success: function (data) {
-                        const sugerencias = [];
-                        $(data).find('producto').each(function () {
-                            const descripcion = $(this).find('descripcion').text();
-                            sugerencias.push(
+  const data = localStorage.getItem('almacena'); // reemplaza 'nombre_de_tu_clave' con el nombre que hayas utilizado para guardar tus datos en Local Storage
+  if (!data) {
+    reject('No se encontraron datos en Local Storage.');
+  }
+  const sugerencias = [];
+  $(data).find('producto').each(function () {
+    const descripcion = $(this).find('descripcion').text();
+    sugerencias.push(descripcion);
+  });
+  const sugerenciasFiltradas = sugerencias.filter(sugerencia =>
+    sugerencia.toLowerCase().startsWith(textoBuscado.toLowerCase())
+  );
+  resolve(sugerenciasFiltradas);
+});
 
-                                descripcion
-                            );
-                        });
-                        console.log(sugerencias)
-                        const sugerenciasFiltradas = sugerencias.filter(sugerencia =>
-                            sugerencia.toLowerCase().startsWith(textoBuscado.toLowerCase())
-                        );
-                        resolve(sugerenciasFiltradas);
-                    },
-                    error: function () {
-                        reject('Ha ocurrido un error al obtener las sugerencias.');
-                    }
-                });
-            });
         }
 
         function mostrarSugerencias(sugerencias) {
