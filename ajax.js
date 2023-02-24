@@ -35,6 +35,20 @@ $(document).ready(function () {
         
     });
 
+    $('#boton3').click(function () {
+       alert("bt 3!!")
+
+        for(let i=0; i<almacen.length; i++){
+          
+            if(almacen[i].codigo == $('input:text[id=cod_producto]').val()){
+                alert(almacen[i].codigo)
+                almacen[i].importe = $('input:text[id=importe]').val()
+                almacen[i].stock = $('input:text[id=stock]').val()
+            }
+        }
+        let productoJSON = JSON.stringify(almacen);  
+        localStorage.setItem('almacen', productoJSON);
+    });
     $('#boton2').click(function () {
         alert("segundo btn.")
         // Obtener cadena JSON del almacenamiento local
