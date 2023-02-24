@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="ajaxB.js"></script>
 </head>
 
 <body>
@@ -18,80 +18,7 @@
     <button type="button" id="botonBusqueda">Buscar</button>
 
     <ul id="sugerencia"></ul>
-    <script>
-    const buscarInput = document.querySelector('#busqueda');
-        const listaSugerencias = document.querySelector('#sugerencia');
-
-        buscarInput.addEventListener('input', busqueda);
-
-        function busqueda() {
-            const textoBuscado = buscarInput.value;
-            if (textoBuscado.trim().length > 0) {
-                getSugerencias(textoBuscado)
-                    .then(mostrarSugerencias)
-                    .catch(gestionarError);
-            } else {
-                limpiarSugerencias();
-            }
-        }
-
-        function getSugerencias(textoBuscado) {
-            return new Promise((resolve, reject) => {
-  const datos = localStorage.getItem('almacen'); // reemplaza 'nombre_de_tu_clave' con el nombre que hayas utilizado para guardar tus datos en Local Storage
- const data=JSON.parse(datos);
- console.log(data)
-  if (!data) {
-    reject('No se encontraron datos en Local Storage.');
-  }
-  const sugerencias = [];
-for (let i = 0; i < data.length; i++) {
-    console.log(data[i])
-  const descripcion = data[i].descripcion;
-  sugerencias.push(descripcion);
-}
-const sugerenciasFiltradas = sugerencias.filter(sugerencia =>
-  sugerencia.toLowerCase().startsWith(textoBuscado.toLowerCase()));
-  resolve(sugerenciasFiltradas);
-  console.log(sugerenciasFiltradas)
-
-});
-
-        }
-
-        function mostrarSugerencias(sugerencias) {
-            listaSugerencias.innerHTML = '';
-            sugerencias.forEach(sugerencia => {
-                const li = document.createElement('li');
-                li.textContent = sugerencia;
-                listaSugerencias.appendChild(li);
-            });
-        }
-
-        function gestionarError(error) {
-            console.error(error);
-        }
-
-        function limpiarSugerencias() {
-            listaSugerencias.innerHTML = '';
-        }</script>
-
-        <script>
-            // const almacen =[];
-
-            // if(localStorage.getItem('almacen') === null){
-            //     console.log("se ejec")
-                
-            // }
-            
-            // const producto= JSON.parse(localStorage.getItem('almacen'))
-
-            // almacen.push(producto)
-
-            // const almacen2 = JSON.stringify(almacen);
-            // localStorage.setItem('almacen2', almacen2);
-           
-            
-        </script>
+       
 
 </body>
 
