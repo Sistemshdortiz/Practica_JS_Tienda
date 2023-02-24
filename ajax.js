@@ -18,6 +18,10 @@ $(document).ready(function () {
         producto.importe = $('input:text[id=importe]').val()
         producto.stock = $('input:text[id=stock]').val()
 
+        //validación de código
+        for(let i=0; i<almacen.length; i++){
+        if(almacen[i].codigo == $('input:text[id=cod_producto]').val()) return alert("Ya existe un producto con ese código, no puede darse de alta otra vez!")
+        }
         almacen.push(producto)
         
         const productoJSON = JSON.stringify(almacen);
