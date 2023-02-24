@@ -1,5 +1,4 @@
 
-
 $(document).ready(function () {
 
     let almacen = JSON.parse(localStorage.getItem('almacen')) || [];
