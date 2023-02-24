@@ -77,12 +77,16 @@ $(document).ready(function () {
     $('#boton4').click(function () {
         let aBorrar = $('input:text[id=cod_producto]').val();
         let almacen = JSON.parse(localStorage.getItem('almacen'));
-        almacen.forEach((prod,index) => {
-            if (prod.codigo === aBorrar) {
-              almacen.splice(index,1)
-            }
-        });
-        const productoJSON = JSON.stringify(almacen);
+       
+        const nuevoAlmacen = almacen.filter(prod => prod.codigo !== aBorrar);
+        if (nuevoAlmacen.length < almacen.length) {
+          almacen = nuevoAlmacen;
+          alert("Se ha borrado el producto");
+        }else{
+            alert("No se ha encontrado")
+        }
+       
+        const productoJSON = JSON.stringify(nuevoAlmacen);
 
         // Guardar cadena JSON en localStorage
 
