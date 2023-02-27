@@ -26,7 +26,7 @@ if (!localStorage.getItem('productosGuardados')) {
         { codigo: 23, descripcion: 'Reloj de pulsera', importe: 100, stock: 4 },
         { codigo: 24, descripcion: 'Zapatillas deportivas', importe: 80, stock: 6 },
         { codigo: 25, descripcion: 'Botas de invierno', importe: 120, stock: 3 },
-        { codigo: 26, descripcion: 'Pantalones vaqueros', import: 20, stock: 2 },
+        { codigo: 26, descripcion: 'Pantalones vaqueros', importe: 20, stock: 2 },
         { codigo: 27, descripcion: 'Mesa', importe: 10, stock: 4 },
         { codigo: 28, descripcion: 'Silla', importe: 5, stock: 10 },
         { codigo: 29, descripcion: 'Sofá', importe: 50, stock: 2 },
