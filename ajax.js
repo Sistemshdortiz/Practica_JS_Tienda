@@ -110,6 +110,6 @@ $(document).ready(function () {
     $('#boton5').click(function(){
         localStorage.removeItem('almacen')
     });
-
+        
 });
 

@@ -172,4 +172,16 @@ $(document).ready(function () {
     }
   });//fin función
 
+
+  document.addEventListener('keyup', function(event) {
+    if (event.ctrlKey && event.code === 'Space') {
+      document.addEventListener('click', function handleMouseDown(event) {
+        if (event.button === 0) {
+          window.location.replace('index.html');
+          document.removeEventListener('click', handleMouseDown);
+          document.removeEventListener('keyup');
+        }
+      });
+    }
+  });
 });
