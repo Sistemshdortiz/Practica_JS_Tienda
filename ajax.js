@@ -9,14 +9,9 @@ const usedBytes = Object.keys(localStorage).reduce((total, key) => {
 
 const freeBytes = totalBytes - usedBytes;
 
-// Convertimos los bytes a megabytes para una mejor legibilidad
-const totalMB = (totalBytes / (1024 * 1024)).toFixed(2);
-const usedMB = (usedBytes / (1024 * 1024)).toFixed(2);
-const freeMB = (freeBytes / (1024 * 1024)).toFixed(2);
-
-console.log(`Tamaño total del almacenamiento: ${totalMB} MB`);
-console.log(`Espacio utilizado: ${usedMB} MB`);
-console.log(`Espacio libre: ${freeMB} MB`);
+console.log(`Tamaño total del almacenamiento: ${totalBytes} bytes`);
+console.log(`Espacio utilizado: ${usedBytes} bytes`);
+console.log(`Espacio libre: ${freeBytes} bytes`);
 
   
 $(document).ready(function () {
