@@ -105,7 +105,9 @@ $(document).ready(function () {
           if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
             let elemento_de_compra = datos_array.find(elem => {
               if (elem.descripcion == buscarInput.value) {
+                elem.stock = input;
                 elem.importe = total;
+                
                 return elem;
               }
             });
