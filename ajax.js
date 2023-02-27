@@ -1,4 +1,24 @@
+"use strict";
+// Obtenemos el tamaño total del almacenamiento en bytes
+const totalBytes = JSON.stringify(localStorage).length;
 
+// Obtenemos el espacio libre disponible en el almacenamiento en bytes
+const usedBytes = Object.keys(localStorage).reduce((total, key) => {
+  return total + localStorage.getItem(key).length;
+}, 0);
+
+const freeBytes = totalBytes - usedBytes;
+
+// Convertimos los bytes a megabytes para una mejor legibilidad
+const totalMB = (totalBytes / (1024 * 1024)).toFixed(2);
+const usedMB = (usedBytes / (1024 * 1024)).toFixed(2);
+const freeMB = (freeBytes / (1024 * 1024)).toFixed(2);
+
+console.log(`Tamaño total del almacenamiento: ${totalMB} MB`);
+console.log(`Espacio utilizado: ${usedMB} MB`);
+console.log(`Espacio libre: ${freeMB} MB`);
+
+  
 $(document).ready(function () {
 
     let almacen = JSON.parse(localStorage.getItem('almacen')) || [];
@@ -61,7 +81,7 @@ $(document).ready(function () {
         const producto = JSON.parse(almacenJSON);
 
         // Acceder a las propiedades del objeto
-        for (i = 0; i < producto.length; i++) {
+        for (let i = 0; i < producto.length; i++) {
             console.log(producto[i]);
         }
 
@@ -91,6 +111,10 @@ $(document).ready(function () {
 
         localStorage.setItem('almacen', productoJSON);
     })
+
+    $('#boton5').click(function(){
+        localStorage.removeItem('almacen')
+    });
 
 });
 

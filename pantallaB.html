@@ -5,21 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="ajaxB.js"></script>
+    <style>
+        .mi_cursor{
+            cursor:pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Welcome to our shop</h1>
+    <div class="d-flex bg-secondary justify-content-center align-items-center" style="height: 100vh;">
+        <form action="">
+            <div>
+                <h1>Pantalla B</h1>
+            </div>
+            <div>
+                <h2>Busca y selecciona un producto para comprar</h2>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="busqueda"
+                    placeholder="Buscar producto por código o descripción">
+            </div>
+            <ul id="sugerencia" class="list-unstyled list-group"></ul>
+            <button type="button" class="btn btn-primary" id="botonBusqueda">Buscar</button>
+            <button type="button" class="btn btn-primary" id="btn2">Ver carrito</button>
+            <button type="button" class="btn btn-primary" onclick="window.location.href = 'Index.html'">volver</button>
 
-
-    <label for="busqueda">Busca por Código Producto o Descripción</label>
-    <input type="text" id="busqueda" placeholder="Buscar...">
-    <button type="button" id="botonBusqueda">Buscar</button>
-
-    <ul id="sugerencia"></ul>
-       
-
+        
+        </form>
+    </div>
 </body>
 
 </html>
