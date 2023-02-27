@@ -85,9 +85,11 @@ $(document).ready(function () {
   $('#botonBusqueda').on('click', function () {
     let input = prompt('Introduzca el número de unidades que desea de este producto.')
     const pattern = /^\d+$/;
-
     const datos = localStorage.getItem('almacen');
     const datos_array = JSON.parse(datos);
+
+     //ocultar la lista de sugerencias con stock
+     $('#div_sugerencias_ocultas').hide();
 
     if (pattern.test(input)) {
       console.log("OK")
@@ -96,33 +98,9 @@ $(document).ready(function () {
       console.log(unidades_en_existencia)
       if (comprobar_existencias(unidades_en_existencia, input)) {
 
-        let precio_unitario = datos_array.find(elem => elem.descripcion == buscarInput.value)?.importe;
-
-        let total = precio_unitario * input;
-        // Aqui se evalua si que se quiere el producto y se añade al carrito 
-        if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
-          let elemento_de_compra = datos_array.find(elem => {
-            if (elem.descripcion == buscarInput.value) {
-              elem.importe = total;
-              return elem;
-            }
-          });
-
-          carrito.push(elemento_de_compra)
-          console.log(carrito)
-          const carritoJSON = JSON.stringify(carrito)
-          localStorage.setItem('carrito', carritoJSON);
-          alert('Añadido al carrito')
-        } else {
-          alert('De acuerdo, sigua con con sus compras')
-        }
-
-
-      } else if (comprobar_existencias2(unidades_en_existencia, input)) {
-        if (confirm(`Solo tenemos ${unidades_en_existencia} unidades, ¿Desea continuar con su compra?`)) {
           let precio_unitario = datos_array.find(elem => elem.descripcion == buscarInput.value)?.importe;
 
-          let total = precio_unitario * unidades_en_existencia;
+          let total = precio_unitario * input;
           // Aqui se evalua si que se quiere el producto y se añade al carrito 
           if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
             let elemento_de_compra = datos_array.find(elem => {
@@ -137,14 +115,59 @@ $(document).ready(function () {
             const carritoJSON = JSON.stringify(carrito)
             localStorage.setItem('carrito', carritoJSON);
             alert('Añadido al carrito')
+          } else {
+            alert('De acuerdo, sigua con con sus compras')
           }
-        } else {
-          alert("No hay existencias suficientes de ese producto seleccione otro");
-        }
 
-      } else {
+
+      } else if (comprobar_existencias2(unidades_en_existencia, input)) {
+
+          if (confirm(`Solo tenemos ${unidades_en_existencia} unidades, ¿Desea continuar con su compra?`)) {
+            let precio_unitario = datos_array.find(elem => elem.descripcion == buscarInput.value)?.importe;
+
+            let total = precio_unitario * unidades_en_existencia;
+            // Aqui se evalua si que se quiere el producto y se añade al carrito 
+            if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
+              let elemento_de_compra = datos_array.find(elem => {
+                if (elem.descripcion == buscarInput.value) {
+                  elem.importe = total;
+                  return elem;
+                }
+              });
+
+              carrito.push(elemento_de_compra)
+              console.log(carrito)
+              const carritoJSON = JSON.stringify(carrito)
+              localStorage.setItem('carrito', carritoJSON);
+              alert('Añadido al carrito')
+            }else {
+              alert('Muy bien continue con sus compras.')
+            }
+          }else {
+            alert("De acuerdo!");
+          }
+         } else {
+            alert("NO HAY EXISTENCIAS DE ESTE PRODUCTO AQUI TE DEJAMOS UNA LISTA DE PRODUCTOS SIMILARES.")
+            buscarInput.value = buscarInput.value[0];
+            let primera_letra = buscarInput.value[0];
+            let almacen = localStorage.getItem('almacen');
+            let almacenJSON = JSON.parse(almacen);
+            console.log(almacenJSON)
+            let sugerencias_parecidas = almacenJSON.filter((producto => producto.descripcion[0] == primera_letra));
+            console.log(sugerencias_parecidas)
+            let sugerencias_en_stock = sugerencias_parecidas.map(function (sugerencia) {
+              const li = document.createElement('li');
+              li.classList.add('list-group-item', 'list-group-item-action', 'mi_cursor');
+              $('#sugerencia_con_stock').append(li);
+              return (sugerencia.stock > 0) ? li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> En Stock" : li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> Agotado";
+            })
+    
+            console.log(`sugerencias en stock ${sugerencias_en_stock}`)
+            $('#div_sugerencias_ocultas').show();
+    
+          }
+    } else {
         alert("No ha introducido un número válido.")
-      }
     }
   });//Fin función
 
