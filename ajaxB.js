@@ -198,8 +198,8 @@ console.log(sumaVenta)
         
         setTimeout(() => {
           const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente' };
-          window.location.href = 'pasarela.html';
-          resolve(respuesta);
+          
+          resolve(window.location.href = 'pasarela.html');
         }, 5000); // 
       });
     }
