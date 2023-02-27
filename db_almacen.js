@@ -10,7 +10,7 @@ if (!localStorage.getItem('productosGuardados')) {
         { codigo: 5, descripcion: 'Escritorio de madera', importe: 100, stock: 8 },
         { codigo: 6, descripcion: 'Mesilla de noche', importe: 40, stock: 12 },
         { codigo: 7, descripcion: 'Estantería de metal', importe: 80, stock: 4 },
-        { digo: 10, descripcion: 'Televisor LED', importe: 500, stock: 2 },
+        { codigo: 10, descripcion: 'Televisor LED', importe: 500, stock: 2 },
         { codigo: 11, descripcion: 'Cocina de gas', importe: 250, stock: 4 },
         { codigo: 12, descripcion: 'Horno eléctrico', importe: 150, stock: 6 },
         { codigo: 13, descripcion: 'Lavavajillas', importe: 350, stock: 2 },
