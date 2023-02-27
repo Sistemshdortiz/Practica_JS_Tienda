@@ -45,7 +45,7 @@ $(document).ready(function () {
     listaSugerencias.innerHTML = '';
     sugerencias.forEach(sugerencia => {
       const li = document.createElement('li');
-      li.classList.add('list-group-item', 'list-group-item-action','mi_cursor');
+      li.classList.add('list-group-item', 'list-group-item-action', 'mi_cursor');
       li.textContent = sugerencia;
 
       //Añadimos el evento mouseenter y mouseleave
@@ -198,7 +198,7 @@ $(document).ready(function () {
   });//fin función
 
 
-  document.addEventListener('keyup', function(event) {
+  document.addEventListener('keyup', function (event) {
     if (event.ctrlKey && event.code === 'Space') {
       document.addEventListener('click', function handleMouseDown(event) {
         if (event.button === 0) {
@@ -210,24 +210,36 @@ $(document).ready(function () {
     }
   });
 
-  
+
   $('#botonPagar').click(function () {
+    
     const car = localStorage.getItem('carrito');
     const carrito = JSON.parse(car);
-console.log(carrito);
+    console.log(carrito);
+    if (carrito){
     const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
-console.log(sumaVenta)
-
+    console.log(sumaVenta)
+  alert("El total de la compra es de "+ sumaVenta)
     function procesarPago() {
+//      window.location.href = 'pasarela.html';
+alert('Nombre completo:\t\t\n' +
+      'Número de tarjeta:\t\n' +
+      'Fecha de caducidad:\t\n' +
+      'CVV:\t\t\t\n' +
+      'Monto a pagar:\t\t\n' +
+      '\n' +
+      '\t\t\tComprar');
       return new Promise((resolve, reject) => {
-        
+
         setTimeout(() => {
+
           const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente' };
-          
-          resolve(window.location.href = 'pasarela.html');
+          resolve(respuesta);
+
         }, 5000); // 
       });
     }
+    
     procesarPago()
       .then(respuesta => {
         console.log(respuesta.mensaje);//PASARELA MAGICA
@@ -240,20 +252,27 @@ console.log(sumaVenta)
           }
           return producto;
         });
+        localStorage.removeItem('carrito');
         localStorage.setItem('almacen', JSON.stringify(almacen)); //ACTUALIZAR STOCK
-                const x = localStorage.getItem('almacen');
-                const xx = JSON.parse(x);
+        const x = localStorage.getItem('almacen');
+        const xx = JSON.parse(x);
         console.log(xx)
-        localstorage.removeItem('carrito');
+
         setTimeout(() => {
           window.location.href = 'pago.html'; //REDIRECCION A WEB IPSE LORUM
         }, 2000);
+        
+
       })
       .catch(error => {
         console.error(error);
-        window.location.href = 'amazon.es'; //REDIRECCION A WEB AMAZON
+        window.location.href = 'www.amazon.es'; //REDIRECCION A WEB AMAZON
       });
+    }else{
+      alert("El carrito está vacio")
+    }
+    
+ });
 
-  });
 
 });
