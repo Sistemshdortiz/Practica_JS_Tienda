@@ -192,15 +192,18 @@ $(document).ready(function () {
 console.log(carrito);
     const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
 console.log(sumaVenta)
-    function procesarPago(carrito) {
+
+    function procesarPago() {
       return new Promise((resolve, reject) => {
+        
         setTimeout(() => {
           const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente' };
+          window.location.href = 'pasarela.html';
           resolve(respuesta);
         }, 5000); // 
       });
     }
-    procesarPago(carrito)
+    procesarPago()
       .then(respuesta => {
         console.log(respuesta.mensaje);//PASARELA MAGICA
         alert(respuesta.mensaje)
@@ -213,11 +216,10 @@ console.log(sumaVenta)
           return producto;
         });
         localStorage.setItem('almacen', JSON.stringify(almacen)); //ACTUALIZAR STOCK
-        
-        const x = localStorage.getItem('almacen');
-    const xx = JSON.parse(x);
+                const x = localStorage.getItem('almacen');
+                const xx = JSON.parse(x);
         console.log(xx)
-        
+        localstorage.removeItem('carrito');
         setTimeout(() => {
           window.location.href = 'pago.html'; //REDIRECCION A WEB IPSE LORUM
         }, 2000);
