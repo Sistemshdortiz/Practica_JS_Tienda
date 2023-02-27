@@ -12,7 +12,7 @@ $(document).ready(function () {
   function busqueda() {
     const textoBuscado = buscarInput.value;
     if (textoBuscado.trim().length > 0) {
-      getSugerencias(textoBuscado)
+      getSugerencias(textoBuscado.trim())
         .then(mostrarSugerencias)
         .catch(gestionarError);
     } else {
