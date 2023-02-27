@@ -184,4 +184,49 @@ $(document).ready(function () {
       });
     }
   });
+
+  
+  $('#botonPagar').click(function () {
+    const car = localStorage.getItem('carrito');
+    const carrito = JSON.parse(car);
+console.log(carrito);
+    const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
+console.log(sumaVenta)
+    function procesarPago(carrito) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente' };
+          resolve(respuesta);
+        }, 5000); // 
+      });
+    }
+    procesarPago(carrito)
+      .then(respuesta => {
+        console.log(respuesta.mensaje);//PASARELA MAGICA
+        alert(respuesta.mensaje)
+        let almacen = JSON.parse(localStorage.getItem('almacen'));
+        almacen = almacen.map(producto => {
+          const carritoProducto = carrito.find(item => item.codigo === producto.codigo);
+          if (carritoProducto) {
+            producto.stock -= carritoProducto.stock;
+          }
+          return producto;
+        });
+        localStorage.setItem('almacen', JSON.stringify(almacen)); //ACTUALIZAR STOCK
+        
+        const x = localStorage.getItem('almacen');
+    const xx = JSON.parse(x);
+        console.log(xx)
+        
+        setTimeout(() => {
+          window.location.href = 'pago.html'; //REDIRECCION A WEB IPSE LORUM
+        }, 2000);
+      })
+      .catch(error => {
+        console.error(error);
+        window.location.href = 'amazon.es'; //REDIRECCION A WEB AMAZON
+      });
+
+  });
+
 });
