@@ -233,7 +233,7 @@ alert('Nombre completo:\t\t\n' +
       return new Promise((resolve, reject) => {
 
         setTimeout(() => {
-          const exitoso = Math.random() < 0.7; // El 70% de las veces el pago es exitoso
+          const exitoso = Math.random() < 0.1; // El 70% de las veces el pago es exitoso
           if (exitoso) {
             const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente.' };
             resolve(respuesta);
@@ -272,7 +272,7 @@ alert('Nombre completo:\t\t\n' +
       .catch(error => {
         console.error(error);
         alert(error.mensaje)
-        window.location.href = 'https://www.amazon.es'; //REDIRECCION A WEB AMAZON
+        window.location.replace('https://www.amazon.es'); //REDIRECCION A WEB AMAZON
       });
     }else{
       alert("El carrito está vacio")
