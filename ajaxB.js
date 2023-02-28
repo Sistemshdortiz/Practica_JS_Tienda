@@ -205,6 +205,7 @@ $(document).ready(function () {
         if (event.button === 0) {
            window.open('index.html', '_blank');
           document.removeEventListener('click', handleMouseDown);
+          document.getElementById("#botonPagar").removeEventListener('click', handleMouseDown);
           document.removeEventListener('keyup');
         }
       });
