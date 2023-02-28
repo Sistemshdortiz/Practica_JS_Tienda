@@ -230,11 +230,15 @@ alert('Nombre completo:\t\t\n' +
       return new Promise((resolve, reject) => {
 
         setTimeout(() => {
-
-          const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente' };
-          resolve(respuesta);
-
-        }, 5000); // 
+          const exitoso = Math.random() < 0.7; // El 70% de las veces el pago es exitoso
+          if (exitoso) {
+            const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente.' };
+            resolve(respuesta);
+          } else {
+            const respuesta = { exitoso: false, mensaje: 'Error al procesar el pago. Intente de nuevo más tarde.' };
+            reject(respuesta);
+          }
+        }, 3000);
       });
     }
     
@@ -264,7 +268,8 @@ alert('Nombre completo:\t\t\n' +
       })
       .catch(error => {
         console.error(error);
-        window.location.href = 'www.amazon.es'; //REDIRECCION A WEB AMAZON
+        alert(error.mensaje)
+        window.location.href = 'https://www.amazon.es'; //REDIRECCION A WEB AMAZON
       });
     }else{
       alert("El carrito está vacio")
