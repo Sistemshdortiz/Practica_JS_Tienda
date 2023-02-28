@@ -88,8 +88,8 @@ $(document).ready(function () {
     const datos = localStorage.getItem('almacen');
     const datos_array = JSON.parse(datos);
 
-     //ocultar la lista de sugerencias con stock
-     $('#div_sugerencias_ocultas').hide();
+    //ocultar la lista de sugerencias con stock
+    $('#div_sugerencias_ocultas').hide();
 
     if (pattern.test(input)) {
       console.log("OK")
@@ -98,16 +98,41 @@ $(document).ready(function () {
       console.log(unidades_en_existencia)
       if (comprobar_existencias(unidades_en_existencia, input)) {
 
+        let precio_unitario = datos_array.find(elem => elem.descripcion == buscarInput.value)?.importe;
+
+        let total = precio_unitario * input;
+        // Aqui se evalua si que se quiere el producto y se añade al carrito 
+        if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
+          let elemento_de_compra = datos_array.find(elem => {
+            if (elem.descripcion == buscarInput.value) {
+              elem.stock = input;
+              elem.importe = total;
+
+              return elem;
+            }
+          });
+
+          carrito.push(elemento_de_compra)
+          console.log(carrito)
+          const carritoJSON = JSON.stringify(carrito)
+          localStorage.setItem('carrito', carritoJSON);
+          alert('Añadido al carrito')
+        } else {
+          alert('De acuerdo, sigua con con sus compras')
+        }
+
+
+      } else if (comprobar_existencias2(unidades_en_existencia, input)) {
+
+        if (confirm(`Solo tenemos ${unidades_en_existencia} unidades, ¿Desea continuar con su compra?`)) {
           let precio_unitario = datos_array.find(elem => elem.descripcion == buscarInput.value)?.importe;
 
-          let total = precio_unitario * input;
+          let total = precio_unitario * unidades_en_existencia;
           // Aqui se evalua si que se quiere el producto y se añade al carrito 
           if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
             let elemento_de_compra = datos_array.find(elem => {
               if (elem.descripcion == buscarInput.value) {
-                elem.stock = input;
                 elem.importe = total;
-                
                 return elem;
               }
             });
@@ -118,58 +143,33 @@ $(document).ready(function () {
             localStorage.setItem('carrito', carritoJSON);
             alert('Añadido al carrito')
           } else {
-            alert('De acuerdo, sigua con con sus compras')
+            alert('Muy bien continue con sus compras.')
           }
+        } else {
+          alert("De acuerdo!");
+        }
+      } else {
+        alert("NO HAY EXISTENCIAS DE ESTE PRODUCTO AQUI TE DEJAMOS UNA LISTA DE PRODUCTOS SIMILARES.")
+        buscarInput.value = buscarInput.value[0];
+        let primera_letra = buscarInput.value[0];
+        let almacen = localStorage.getItem('almacen');
+        let almacenJSON = JSON.parse(almacen);
+        console.log(almacenJSON)
+        let sugerencias_parecidas = almacenJSON.filter((producto => producto.descripcion[0] == primera_letra));
+        console.log(sugerencias_parecidas)
+        let sugerencias_en_stock = sugerencias_parecidas.map(function (sugerencia) {
+          const li = document.createElement('li');
+          li.classList.add('list-group-item', 'list-group-item-action', 'mi_cursor');
+          $('#sugerencia_con_stock').append(li);
+          return (sugerencia.stock > 0) ? li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> En Stock" : li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> Agotado";
+        })
 
+        console.log(`sugerencias en stock ${sugerencias_en_stock}`)
+        $('#div_sugerencias_ocultas').show();
 
-      } else if (comprobar_existencias2(unidades_en_existencia, input)) {
-
-          if (confirm(`Solo tenemos ${unidades_en_existencia} unidades, ¿Desea continuar con su compra?`)) {
-            let precio_unitario = datos_array.find(elem => elem.descripcion == buscarInput.value)?.importe;
-
-            let total = precio_unitario * unidades_en_existencia;
-            // Aqui se evalua si que se quiere el producto y se añade al carrito 
-            if (confirm(`El precio por unidad es de ${precio_unitario}€, y el total a pagar sería de ${total}€`)) {
-              let elemento_de_compra = datos_array.find(elem => {
-                if (elem.descripcion == buscarInput.value) {
-                  elem.importe = total;
-                  return elem;
-                }
-              });
-
-              carrito.push(elemento_de_compra)
-              console.log(carrito)
-              const carritoJSON = JSON.stringify(carrito)
-              localStorage.setItem('carrito', carritoJSON);
-              alert('Añadido al carrito')
-            }else {
-              alert('Muy bien continue con sus compras.')
-            }
-          }else {
-            alert("De acuerdo!");
-          }
-         } else {
-            alert("NO HAY EXISTENCIAS DE ESTE PRODUCTO AQUI TE DEJAMOS UNA LISTA DE PRODUCTOS SIMILARES.")
-            buscarInput.value = buscarInput.value[0];
-            let primera_letra = buscarInput.value[0];
-            let almacen = localStorage.getItem('almacen');
-            let almacenJSON = JSON.parse(almacen);
-            console.log(almacenJSON)
-            let sugerencias_parecidas = almacenJSON.filter((producto => producto.descripcion[0] == primera_letra));
-            console.log(sugerencias_parecidas)
-            let sugerencias_en_stock = sugerencias_parecidas.map(function (sugerencia) {
-              const li = document.createElement('li');
-              li.classList.add('list-group-item', 'list-group-item-action', 'mi_cursor');
-              $('#sugerencia_con_stock').append(li);
-              return (sugerencia.stock > 0) ? li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> En Stock" : li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> Agotado";
-            })
-    
-            console.log(`sugerencias en stock ${sugerencias_en_stock}`)
-            $('#div_sugerencias_ocultas').show();
-    
-          }
+      }
     } else {
-        alert("No ha introducido un número válido.")
+      alert("No ha introducido un número válido.")
     }
   });//Fin función
 
@@ -212,72 +212,100 @@ $(document).ready(function () {
 
 
   $('#botonPagar').click(function () {
-    
+
     const car = localStorage.getItem('carrito');
     const carrito = JSON.parse(car);
     console.log(carrito);
-    if (carrito){
-    const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
-    console.log(sumaVenta)
-  alert("El total de la compra es de "+ sumaVenta)
-    function procesarPago() {
-//      window.location.href = 'pasarela.html';
-alert('Nombre completo:\t\t\n' +
+    if (carrito) {
+      const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
+      console.log(sumaVenta)
+      alert("El total de la compra es de " + sumaVenta + "€")
+     
+      procesarPago()
+        .then(respuesta => {
+          console.log(respuesta.mensaje);//PASARELA MAGICA
+          alert(respuesta.mensaje)
+          let almacen = JSON.parse(localStorage.getItem('almacen'));
+          almacen = almacen.map(producto => {
+            const carritoProducto = carrito.find(item => item.codigo === producto.codigo);
+            if (carritoProducto) {
+              producto.stock -= carritoProducto.stock;
+            }
+            return producto;
+          });
+          localStorage.removeItem('carrito');
+          localStorage.setItem('almacen', JSON.stringify(almacen)); //ACTUALIZAR STOCK
+          const x = localStorage.getItem('almacen');
+          const xx = JSON.parse(x);
+          console.log(xx)
+
+          setTimeout(() => {
+            window.location.href = 'pago.html'; //REDIRECCION A WEB IPSE LORUM
+          }, 2000);
+
+
+        })
+        .catch(error => {
+          console.error(error);
+          alert(error.mensaje)
+          window.location.replace('https://www.amazon.es'); //REDIRECCION A WEB AMAZON
+        });
+    } else {
+      alert("El carrito está vacio")
+    }
+
+  });
+  
+  function procesarPago() {
+    //   window.location.href = 'pasarela.html';
+    alert('Nombre completo:\t\t\n' +
       'Número de tarjeta:\t\n' +
       'Fecha de caducidad:\t\n' +
       'CVV:\t\t\t\n' +
       'Monto a pagar:\t\t\n' +
       '\n' +
       '\t\t\tComprar');
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-        setTimeout(() => {
-          const exitoso = Math.random() < 0.1; // El 70% de las veces el pago es exitoso
-          if (exitoso) {
-            const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente.' };
-            resolve(respuesta);
-          } else {
-            const respuesta = { exitoso: false, mensaje: 'Error al procesar el pago. Intente de nuevo más tarde.' };
-            reject(respuesta);
-          }
-        }, 3000);
-      });
-    }
-    
-    procesarPago()
-      .then(respuesta => {
-        console.log(respuesta.mensaje);//PASARELA MAGICA
-        alert(respuesta.mensaje)
-        let almacen = JSON.parse(localStorage.getItem('almacen'));
-        almacen = almacen.map(producto => {
-          const carritoProducto = carrito.find(item => item.codigo === producto.codigo);
-          if (carritoProducto) {
-            producto.stock -= carritoProducto.stock;
-          }
-          return producto;
-        });
-        localStorage.removeItem('carrito');
-        localStorage.setItem('almacen', JSON.stringify(almacen)); //ACTUALIZAR STOCK
-        const x = localStorage.getItem('almacen');
-        const xx = JSON.parse(x);
-        console.log(xx)
+      setTimeout(() => {
+        const exitoso = Math.random() < 0.7; // El 70% de las veces el pago es exitoso
+        if (exitoso) {
+          const respuesta = { exitoso: true, mensaje: 'Pago procesado correctamente.' };
+          resolve(respuesta);
+        } else {
+          const respuesta = { exitoso: false, mensaje: 'Error al procesar el pago. Intente de nuevo más tarde.' };
+          reject(respuesta);
+        }
+      }, 3000);
+    });
+  }
 
-        setTimeout(() => {
-          window.location.href = 'pago.html'; //REDIRECCION A WEB IPSE LORUM
-        }, 2000);
-        
+  document.addEventListener('contextmenu', (event) => {
+    //prevenir el comportamiento predeterminado del botón derecho del mouse
+    event.preventDefault();
 
-      })
-      .catch(error => {
-        console.error(error);
-        alert(error.mensaje)
-        window.location.replace('https://www.amazon.es'); //REDIRECCION A WEB AMAZON
-      });
-    }else{
-      alert("El carrito está vacio")
-    }
-    
- });
+    //elementos a deshabilitar
+    const input = document.querySelector('input');
+    const botones = document.querySelectorAll('button');
+
+    //deshabilitar los elementos
+    input.disabled = true;
+    botones.forEach(boton => boton.disabled = true);
+
+  });
+
+  //manejar el evento click 
+  document.addEventListener('click', () => {
+    const input = document.querySelector('input');
+    const botones = document.querySelectorAll('button');
+
+    input.disabled = false;
+    botones.forEach(boton => boton.disabled = false);
+  });
+
+
+
+
 
 
 });
