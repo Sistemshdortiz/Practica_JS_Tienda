@@ -220,8 +220,7 @@ $(document).ready(function () {
     if (carrito) {
       const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
       console.log(sumaVenta)
-      alert("El total de la compra es de " + sumaVenta + "€")
-     
+      alert("El total de la compra es de " + sumaVenta + "€");
       procesarPago()
         .then(respuesta => {
           console.log(respuesta.mensaje);//PASARELA MAGICA
@@ -256,9 +255,13 @@ $(document).ready(function () {
     }
 
   });
-  
+
+//  async function pasarela(){
+//   window.location.href = 'pasarela.html';
+//   await procesarPago();
+//  }
   function procesarPago() {
-    //   window.location.href = 'pasarela.html';
+    
     alert('Nombre completo:\t\t\n' +
       'Número de tarjeta:\t\n' +
       'Fecha de caducidad:\t\n' +
