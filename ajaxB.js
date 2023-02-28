@@ -189,11 +189,11 @@ $(document).ready(function () {
 
     // Convertir cadena JSON a objeto
     const productos = JSON.parse(carritoJSON);
-    let carrito_alert="";
+    let carrito_alert = "";
     // Acceder a las propiedades del objeto
     for (let i = 0; i < productos.length; i++) {
       console.log(productos[i]);
-      carrito_alert += "-" + productos[i].descripcion +", -->cantidad: "+productos[i].stock + "\n";
+      carrito_alert += "-" + productos[i].descripcion + ", -->cantidad: " + productos[i].stock + "\n";
     }
     alert(carrito_alert)
   });//fin función
@@ -201,15 +201,11 @@ $(document).ready(function () {
 
   document.addEventListener('keyup', function (event) {
     if (event.ctrlKey && event.code === 'Space') {
-      document.addEventListener('click', function handleMouseDown(event) {
-        if (event.button === 0) {
-           window.open('index.html', '_blank');
-          document.removeEventListener('click', handleMouseDown);
-          document.removeEventListener('keyup');
-        }
-      });
+      event.preventDefault();
+      window.open('index.html', '_blank');
     }
   });
+
 
 
   $('#botonPagar').click(function () {
@@ -220,7 +216,8 @@ $(document).ready(function () {
     if (carrito) {
       const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
       console.log(sumaVenta)
-      alert("El total de la compra es de " + sumaVenta + "€");
+      alert("El total de la compra es de " + sumaVenta + "€")
+
       procesarPago()
         .then(respuesta => {
           console.log(respuesta.mensaje);//PASARELA MAGICA
