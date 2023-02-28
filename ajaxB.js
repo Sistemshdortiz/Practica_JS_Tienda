@@ -184,17 +184,18 @@ $(document).ready(function () {
 
   //Función de prueba para ver que tiene el localStorage con clave carrito
   $('#btn2').click(function () {
-    alert("segundo btn.")
     // Obtener cadena JSON del almacenamiento local
     const carritoJSON = localStorage.getItem('carrito');
 
     // Convertir cadena JSON a objeto
     const productos = JSON.parse(carritoJSON);
-
+    let carrito_alert="";
     // Acceder a las propiedades del objeto
     for (let i = 0; i < productos.length; i++) {
       console.log(productos[i]);
+      carrito_alert += "-" + productos[i].descripcion +", -->cantidad: "+productos[i].stock + "\n";
     }
+    alert(carrito_alert)
   });//fin función
 
 
@@ -202,7 +203,7 @@ $(document).ready(function () {
     if (event.ctrlKey && event.code === 'Space') {
       document.addEventListener('click', function handleMouseDown(event) {
         if (event.button === 0) {
-          window.location.replace('index.html');
+           window.open('index.html', '_blank');
           document.removeEventListener('click', handleMouseDown);
           document.removeEventListener('keyup');
         }
