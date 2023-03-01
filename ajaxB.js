@@ -89,7 +89,7 @@ $(document).ready(function () {
     const datos_array = JSON.parse(datos);
     //----------EN DESARROLLO----------
 
-    if (localStorage.getItem("carrito").length > 0) {
+    if (localStorage.getItem("carrito")) {
       let carrito_dev = localStorage.getItem('carrito');
       let datos_carrito = JSON.parse(carrito_dev);
       if (!puedes_seguir_comprando(input, datos_carrito, datos_array)) return alert("Tienes todo el stock en tu carrito, no tenemos más");
