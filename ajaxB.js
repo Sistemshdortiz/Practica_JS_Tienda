@@ -217,10 +217,9 @@ $(document).ready(function () {
       const sumaVenta = carrito.reduce((a, v) => { return a + v.importe; }, 0);
       console.log(sumaVenta)
       alert("El total de la compra es de " + sumaVenta + "€")
-
       procesarPago()
         .then(respuesta => {
-          console.log(respuesta.mensaje);//PASARELA MAGICA
+          console.log(respuesta.mensaje);
           alert(respuesta.mensaje)
           let almacen = JSON.parse(localStorage.getItem('almacen'));
           almacen = almacen.map(producto => {
@@ -232,14 +231,12 @@ $(document).ready(function () {
           });
           localStorage.removeItem('carrito');
           localStorage.setItem('almacen', JSON.stringify(almacen)); //ACTUALIZAR STOCK
-          const x = localStorage.getItem('almacen');
-          const xx = JSON.parse(x);
-          console.log(xx)
+          const x = JSON.parse(localStorage.getItem('almacen'));
+          console.log(x);
 
           setTimeout(() => {
-            window.location.href = 'pago.html'; //REDIRECCION A WEB IPSE LORUM
+            window.location.href = 'pago.html'; //REDIRECCION A WEB
           }, 2000);
-
 
         })
         .catch(error => {
@@ -253,10 +250,10 @@ $(document).ready(function () {
 
   });
 
-//  async function pasarela(){
-//   window.location.href = 'pasarela.html';
-//   await procesarPago();
-//  }
+  // async function pasarela(){
+  //   window.location.href = 'pasarela.html';
+  //   }
+  
   function procesarPago() {
     
     alert('Nombre completo:\t\t\n' +
