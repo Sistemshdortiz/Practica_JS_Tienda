@@ -3,7 +3,7 @@
 if (!localStorage.getItem('productosGuardados')) {
     // Definimos los productos
     const productos = [
-        { codigo: 1, descripcion: 'Mesa de comedor', importe: 150, stock: 5 },
+        { codigo: 1, descripcion: 'Mesa de comedor', importe: 150, stock: 0 },
         { codigo: 2, descripcion: 'Silla de escritorio', importe: 50, stock: 10 },
         { codigo: 3, descripcion: 'Sofá de dos plazas', importe: 300, stock: 3 },
         { codigo: 4, descripcion: 'Cama individual', importe: 200, stock: 6 },

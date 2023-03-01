@@ -87,6 +87,14 @@ $(document).ready(function () {
     const pattern = /^\d+$/;
     const datos = localStorage.getItem('almacen');
     const datos_array = JSON.parse(datos);
+    //----------EN DESARROLLO----------
+
+    if (localStorage.getItem("carrito").length > 0) {
+      let carrito_dev = localStorage.getItem('carrito');
+      let datos_carrito = JSON.parse(carrito_dev);
+      if (!puedes_seguir_comprando(input, datos_carrito, datos_array)) return alert("Tienes todo el stock en tu carrito, no tenemos más");
+    }
+    //---------------------------
 
     //ocultar la lista de sugerencias con stock
     $('#div_sugerencias_ocultas').hide();
@@ -150,6 +158,7 @@ $(document).ready(function () {
         }
       } else {
         alert("NO HAY EXISTENCIAS DE ESTE PRODUCTO AQUI TE DEJAMOS UNA LISTA DE PRODUCTOS SIMILARES.")
+        $('#sugerencia_con_stock').empty();
         buscarInput.value = buscarInput.value[0];
         let primera_letra = buscarInput.value[0];
         let almacen = localStorage.getItem('almacen');
@@ -180,15 +189,37 @@ $(document).ready(function () {
   function comprobar_existencias2(existencias, num_pedido) {
     return existencias < num_pedido && existencias > 0 ? true : false;
   }//fin función
+
+  //------------en desarrollo--------------
+  function puedes_seguir_comprando(input, datos_carrito, datos_almacen) {
+    if((datos_carrito.find(dato=> dato.descripcion==buscarInput.value)==undefined)) return true;
+    if (!localStorage.getItem('carrito')) return true;
+    let total_comprado = datos_carrito.filter((dato => dato.descripcion == buscarInput.value));
+    let suma_total_comprado = total_comprado.reduce((acum, actual) => acum.stock + actual.stock);
+    let stock_en_carro = suma_total_comprado + input;
+
+    //obtenemos la cantidad del producto en almacen
+    let total_en_almacen = datos_almacen.find((dato => dato.descripcion == buscarInput.value));
+    let stock_pro_almacen = total_en_almacen.stock;
+
+    if (stock_pro_almacen < stock_en_carro) {
+      return false;
+    } else {
+      return true;
+    }
+
+  }//Fin función
   //*****************
 
   //Función de prueba para ver que tiene el localStorage con clave carrito
   $('#btn2').click(function () {
+    if (!localStorage.getItem('carrito')) return alert("Carrito vacío!!");
     // Obtener cadena JSON del almacenamiento local
     const carritoJSON = localStorage.getItem('carrito');
 
     // Convertir cadena JSON a objeto
     const productos = JSON.parse(carritoJSON);
+
     let carrito_alert = "";
     // Acceder a las propiedades del objeto
     for (let i = 0; i < productos.length; i++) {
@@ -255,7 +286,7 @@ $(document).ready(function () {
   //   }
   
   function procesarPago() {
-    
+
     alert('Nombre completo:\t\t\n' +
       'Número de tarjeta:\t\n' +
       'Fecha de caducidad:\t\n' +
