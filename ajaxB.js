@@ -158,6 +158,7 @@ $(document).ready(function () {
         }
       } else {
         alert("NO HAY EXISTENCIAS DE ESTE PRODUCTO AQUI TE DEJAMOS UNA LISTA DE PRODUCTOS SIMILARES.")
+        $('#sugerencia_con_stock').empty();
         buscarInput.value = buscarInput.value[0];
         let primera_letra = buscarInput.value[0];
         let almacen = localStorage.getItem('almacen');
@@ -201,24 +202,6 @@ $(document).ready(function () {
     let total_en_almacen = datos_almacen.find((dato => dato.descripcion == buscarInput.value));
     let stock_pro_almacen = total_en_almacen.stock;
 
-    //***********
-    // buscarInput.value = buscarInput.value[0];
-    // let primera_letra = buscarInput.value[0];
-    // let almacen = localStorage.getItem('almacen');
-    // let almacenJSON = JSON.parse(almacen);
-    // console.log(almacenJSON)
-    // let sugerencias_parecidas = almacenJSON.filter((producto => producto.descripcion[0] == primera_letra));
-    // console.log(sugerencias_parecidas)
-    // let sugerencias_en_stock = sugerencias_parecidas.map(function (sugerencia) {
-    //   const li = document.createElement('li');
-    //   li.classList.add('list-group-item', 'list-group-item-action', 'mi_cursor');
-    //   $('#sugerencia_con_stock').append(li);
-    //   return (sugerencia.stock > 0) ? li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> En Stock" : li.textContent = sugerencia.descripcion + " con cod#" + sugerencia.codigo + "---> Agotado";
-    // })
-
-    // console.log(`sugerencias en stock ${sugerencias_en_stock}`)
-    // $('#div_sugerencias_ocultas').show();
-    //*************
     if (stock_pro_almacen < stock_en_carro) {
       return false;
     } else {
